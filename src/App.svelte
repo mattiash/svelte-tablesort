@@ -1,7 +1,7 @@
 <script>
 
 	import MyTable from './MyTable.svelte'
-	import {doSort, initSort} from './sort.js'
+	import {sorted, sortOn} from './sort.js'
 
 	let data = [
 		{
@@ -15,32 +15,17 @@
 
 	]
 
-	initSort(data, 'firstName')
-
-// Can we do something with $: to avoid sortFunction?
-//	$: data = sorted(data, sortOrder)
-	
-	function sortFunction(fieldName) {
-		return (event) => {
-			doSort(data, fieldName, event)
-			data = data
-		}
-	}
+	let sortOrder = 'firstName'
+    $: [data, sortOrder] = sorted(data, sortOrder)
 
 </script>
-
-<style>
-	h1 {
-		color: purple;
-	}
-</style>
 
 <h1>Hello</h1>
 
 <MyTable items={data}>
 	<tr slot="header">
-		<th on:click={sortFunction('firstName')}>First name</th>
-		<th on:click={sortFunction('lastName')}>Last name</th>
+		<th on:click={(event) => sortOrder = sortOn(sortOrder, 'firstName', event)}>First name</th>
+		<th on:click={(event) => sortOrder = sortOn(sortOrder, 'lastName', event)}>Last name</th>
 	</tr>
 	<tr slot="body" let:item={item}>
 		<td class="red">{item.firstName}</td>
