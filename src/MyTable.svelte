@@ -7,15 +7,9 @@
 
     sortOrder = initialOrder
 
-//    $: sortedItems = sorted([...items], sortOrder)
+    $: sortedItems = sorted([...items], sortOrder)
 
-    export function sortOn(event) {
-        console.log('Inside', sortOrder, event.target.dataset.sort)
-        sortOrder = event.target.dataset.sort
-    }
-
-    export const sorted = function(arr, sortOrder) {
-        console.log('sortOrder', sortOrder)
+    const sorted = function(arr, sortOrder) {
         doSort(arr, sortOrder)
         return arr
     }
@@ -32,17 +26,16 @@
         }
     }
 
-/*
     onMount( () => {
         const th = thead.getElementsByTagName('th')
         for(let i = 0; i < th.length; i++) {
             console.log('th', th[i].dataset.sort)
             if(th[i].dataset.sort) {
-                th[i].onclick = (event) => console.log('onclick', th[i].dataset.sort)
+                th[i].onclick = (event) => sortOrder = th[i].dataset.sort
             }
         }
     })
-*/
+
     console.log('Initial order', sortOrder)
 </script>
 
@@ -52,14 +45,13 @@ tbody :global(.red) {
 }
 </style>
 
-<div>Inside: {sortOrder}</div>
 <table>
 	<thead bind:this={thead}>
 		<slot name="header">
 		</slot>
 	</thead>
 	<tbody>
-	{#each items as item}
+	{#each sortedItems as item}
         <slot name="body" item={item}></slot>
 	{/each}
 	</tbody>
