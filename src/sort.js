@@ -17,14 +17,17 @@ export function doSort(arr, fieldName, event) {
 export function sorted(arr, sortOrder) {
     console.log('sortOrder', sortOrder)
     doSort(arr, sortOrder)
-    return [arr, sortOrder]
+    return arr
 }
 
-export function sortOn(currOrder, newOrder, event) {
+export function sortOn(currOrder, event) {
+    console.log(event)
+    const newOrder = event.target.dataset.sort
     console.log('sortOn', newOrder)
     if(event.shiftKey) {
         console.log('should push')
     }
+    event.target.className = "sorted"
     if(currOrder === newOrder) {
         return '-' + currOrder
     }
