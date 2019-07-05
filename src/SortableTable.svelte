@@ -1,16 +1,27 @@
 <script>
     import { onMount } from 'svelte'
+    import {sortGenerator, compareStrings, compareNumbers} from './sort.js'
     export let items
 
     let thead
     let sortOrder = [[]]
 
-    $: sortedItems = sorted([...items], sortOrder[0][0])
+    $: sortedItems = sorted([...items], sortOrder)
 
-    const sorted = function(arr, fieldName) {
-        if(fieldName) {
-            arr.sort((a, b) => a[fieldName].localeCompare(b[fieldName]))
-        }
+    const sorted = function(arr, sortOrder) {
+        arr.sort(sortGenerator( function*(a,b) {
+            for( let [fieldName, r] of sortOrder) {
+                const reverse = r===0 ? 1 : -1
+                if(typeof a[fieldName] === 'number') {
+                    yield reverse*compareNumbers(a[fieldName], b[fieldName])  
+                }
+                else {
+                    yield reverse*compareStrings(a[fieldName], b[fieldName])  
+                }
+            }
+
+        } ))
+
         return arr
     }
 
@@ -33,7 +44,6 @@
                 sortOrder = [[fieldName, 0]]
             }
         }
-        console.log()
         th.className = 'sortable ' + (sortOrder[sortOrder.length-1][1] ? 'descending' : 'ascending')
     }
 
@@ -53,7 +63,11 @@
                 th[i].className="sortable"
                 th[i].onclick = (event) => updateSortOrder(th[i],event.shiftKey)
             }
-            if(th[i].dataset.sortInitial != undefined) {
+            if(th[i].dataset.sortInitial === "descending") {
+                th[i].className="sortable descending"
+                sortOrder = [...sortOrder, [th[i].dataset.sort, 1]]
+            }
+            else if(th[i].dataset.sortInitial != undefined) {
                 th[i].className="sortable ascending"
                 sortOrder = [...sortOrder, [th[i].dataset.sort, 0]]
             }
