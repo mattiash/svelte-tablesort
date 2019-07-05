@@ -2,6 +2,8 @@
     import { onMount } from 'svelte'
     import {sortGenerator, compareStrings, compareNumbers} from './sort.js'
     export let items
+    let className=""
+    export {className as class}
 
     let thead
     let sortOrder = [[]]
@@ -85,7 +87,7 @@ thead :global(th.sortable) {
 }
 </style>
 
-<table>
+<table class={className}>
 	<thead bind:this={thead}>
 		<slot name="thead">
 		</slot>

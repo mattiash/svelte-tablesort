@@ -3,8 +3,7 @@
 
 	let items = []
 
-	// https://node-hnapi.herokuapp.com/news?page=1
-	fetch(`https://node-hnapi.herokuapp.com/news?page=1`)
+	const dataPromise = fetch(`https://node-hnapi.herokuapp.com/news?page=1`)
 		.then(r => r.json())
 		.then(data => {
 			items = data
@@ -13,7 +12,10 @@
 
 <h1>Hacker News</h1>
 
-<SortableTable items={items}>
+{#await dataPromise}
+Loading...
+{:then}
+<SortableTable items={items} class="test1 test2">
 	<tr slot="thead">
 		<th data-sort="title">Title</th>
 		<th data-sort="user">User</th>
@@ -29,3 +31,6 @@
 		<td>{item.comments_count}</td>
 	</tr>
 </SortableTable>
+{:catch error}
+	<p style="color: red">{error.message}</p>
+{/await}
