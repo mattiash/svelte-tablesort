@@ -54,7 +54,7 @@
                 th[i].onclick = (event) => updateSortOrder(th[i],event.shiftKey)
             }
             if(th[i].dataset.sortInitial != undefined) {
-                th[i].className="sortable descending"
+                th[i].className="sortable ascending"
                 sortOrder = [...sortOrder, [th[i].dataset.sort, 0]]
             }
         }
@@ -62,21 +62,26 @@
 </script>
 
 <style>
-tbody :global(.red) {
-    color: red
+thead :global(th.sortable) {
+	cursor: pointer;
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
 }
 </style>
 
-x {sortOrder}
-
 <table>
 	<thead bind:this={thead}>
-		<slot name="header">
+		<slot name="thead">
 		</slot>
 	</thead>
 	<tbody>
 	{#each sortedItems as item}
-        <slot name="body" item={item}></slot>
+        <slot name="tbody" item={item}></slot>
 	{/each}
 	</tbody>
+    <tfoot>
+        <slot name="tfoot"></slot>
+    </tfoot>
 </table>

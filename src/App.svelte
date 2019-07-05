@@ -1,29 +1,30 @@
 <script>
-	import MyTable from './MyTable.svelte'
+	import SortableTable from './SortableTable.svelte'
 
-	let data = [
-		{
-			firstName: 'A',
-			lastName: 'F'
-		},
-		{
-			firstName: 'B',
-			lastName: 'E'
-		},
-	]
+	let items = []
 
-	setTimeout(() => data = [...data, {firstName: 'C', lastName: 'A'}], 10000)
+	// https://node-hnapi.herokuapp.com/news?page=1
+	fetch(`https://node-hnapi.herokuapp.com/news?page=1`)
+		.then(r => r.json())
+		.then(data => {
+			console.log('got data')
+			items = data
+		});
 </script>
 
 <h1>Hello</h1>
 
-<MyTable items={data}>
-	<tr slot="header">
-		<th data-sort="firstName" data-sort-initial>First name</th>
-		<th data-sort="lastName">Last name</th>
+<SortableTable items={items}>
+	<tr slot="thead">
+		<th data-sort="title" data-sort-initial>Title</th>
+		<th data-sort="user">User</th>
+		<th data-sort="time">Time ago</th>
+		<th data-sort="comments_count">Comments</th>
 	</tr>
-	<tr slot="body" let:item={item}>
-		<td class="red">{item.firstName}</td>
-		<td>{item.lastName}</td>
+	<tr slot="tbody" let:item={item}>
+		<td><a href="{item.url}">{item.title}</a></td>
+		<td>{item.user}</td>
+		<td>{item.time_ago}</td>
+		<td>{item.comments_count}</td>
 	</tr>
-</MyTable>
+</SortableTable>
