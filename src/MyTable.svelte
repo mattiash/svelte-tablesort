@@ -14,12 +14,35 @@
         return arr
     }
 
-    function updateSortOrder(fieldName, push) {
+    function updateSortOrder(th, push) {
+        const fieldName = th.dataset.sort
         if(push) {
-            sortOrder = [...sortOrder, [fieldName, 0]]
+            if(sortOrder[sortOrder.length-1][0] === fieldName) {
+                sortOrder[sortOrder.length-1] = [fieldName, (sortOrder[sortOrder.length-1][1] + 1) % 2]
+            }
+            else {
+                sortOrder = [...sortOrder, [fieldName, 0]]
+            }
         }
         else {
-            sortOrder = [[fieldName, 0]]
+            if(sortOrder.length === 1 && sortOrder[0][0] === fieldName) {
+                sortOrder[0] = [fieldName, (sortOrder[0][1] + 1) % 2]
+            }
+            else {
+                resetClasses()
+                sortOrder = [[fieldName, 0]]
+            }
+        }
+        console.log()
+        th.className = 'sortable ' + (sortOrder[sortOrder.length-1][1] ? 'descending' : 'ascending')
+    }
+
+    function resetClasses() {
+        const th = thead.getElementsByTagName('th')
+        for(let i = 0; i < th.length; i++) {
+            if(th[i].dataset.sort) {
+                th[i].className="sortable"
+            }
         }
     }
 
@@ -27,9 +50,11 @@
         const th = thead.getElementsByTagName('th')
         for(let i = 0; i < th.length; i++) {
             if(th[i].dataset.sort) {
-                th[i].onclick = (event) => updateSortOrder(th[i].dataset.sort,event.shiftKey)
+                th[i].className="sortable"
+                th[i].onclick = (event) => updateSortOrder(th[i],event.shiftKey)
             }
             if(th[i].dataset.sortInitial != undefined) {
+                th[i].className="sortable descending"
                 sortOrder = [...sortOrder, [th[i].dataset.sort, 0]]
             }
         }

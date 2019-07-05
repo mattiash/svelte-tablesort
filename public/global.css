@@ -60,3 +60,18 @@ button:active {
 button:focus {
 	border-color: #666;
 }
+
+.sortable {
+	cursor: pointer;
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+
+.sortable.ascending {
+	background-color: green;
+}
+.sortable.descending {
+	background-color: red;
+}
