@@ -1,4 +1,9 @@
 <script>
+    const CLASSNAME_TABLE = 'tablesort'
+    const CLASSNAME_SORTABLE = 'sortable'
+    const CLASSNAME_ASC = 'ascending'
+    const CLASSNAME_DESC = 'descending'
+
     import { onMount } from 'svelte'
     import {sortGenerator, compareStrings, compareNumbers} from './src/sort.js'
     export let items
@@ -46,14 +51,14 @@
                 sortOrder = [[fieldName, 0]]
             }
         }
-        th.className = 'sortable ' + (sortOrder[sortOrder.length-1][1] ? 'descending' : 'ascending')
+        th.className = CLASSNAME_SORTABLE + ' ' + (sortOrder[sortOrder.length-1][1] ? CLASSNAME_DESC : CLASSNAME_ASC)
     }
 
     function resetClasses() {
         const th = thead.getElementsByTagName('th')
         for(let i = 0; i < th.length; i++) {
             if(th[i].dataset.sort) {
-                th[i].className="sortable"
+                th[i].className=CLASSNAME_SORTABLE
             }
         }
     }
@@ -62,15 +67,15 @@
         const th = thead.getElementsByTagName('th')
         for(let i = 0; i < th.length; i++) {
             if(th[i].dataset.sort) {
-                th[i].className="sortable"
+                th[i].className=CLASSNAME_SORTABLE
                 th[i].onclick = (event) => updateSortOrder(th[i],event.shiftKey)
             }
             if(th[i].dataset.sortInitial === "descending") {
-                th[i].className="sortable descending"
+                th[i].className = CLASSNAME_SORTABLE + ' ' + CLASSNAME_DESC
                 sortOrder = [...sortOrder, [th[i].dataset.sort, 1]]
             }
             else if(th[i].dataset.sortInitial != undefined) {
-                th[i].className="sortable ascending"
+                th[i].className = CLASSNAME_SORTABLE + ' ' + CLASSNAME_ASC
                 sortOrder = [...sortOrder, [th[i].dataset.sort, 0]]
             }
         }
@@ -87,7 +92,7 @@ thead :global(th.sortable) {
 }
 </style>
 
-<table class={className}>
+<table class="{CLASSNAME_TABLE} {className}">
 	<thead bind:this={thead}>
 		<slot name="thead">
 		</slot>
