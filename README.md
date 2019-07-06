@@ -1,68 +1,53 @@
-*Psst — looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
+# svelte-tablesort
 
----
+A Svelte 3 component that makes it possible to sort a table
+by clicking the headers.
 
-# svelte app
+## Usage
 
-This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.
-
-To create a new project based on this template using [degit](https://github.com/Rich-Harris/degit):
-
-```bash
-npx degit sveltejs/template svelte-app
-cd svelte-app
+```
+npm install svelte-tablesort
 ```
 
-*Note that you will need to have [Node.js](https://nodejs.org) installed.*
+This code shows an html-table where the user can sort
+the rows by clicking the headers at the top of each column:
 
+```
+<script>
+	import TableSort from '../TableSort.svelte'
 
-## Get started
+	let items = []
 
-Install the dependencies...
+	const dataPromise = fetch(`https://node-hnapi.herokuapp.com/news?page=1`)
+		.then(r => r.json())
+		.then(data => {
+			items = data
+		});
+</script>
 
-```bash
-cd svelte-app
-npm install
+<TableSort items={items}>
+	<tr slot="thead">
+		<th data-sort="title">Title</th>
+		<th data-sort="user">User</th>
+	</tr>
+	<tr slot="tbody" let:item={item}>
+		<td><a href="{item.url}">{item.title}</a></td>
+		<td>{item.user}</td>
+	</tr>
+</TableSort>
 ```
 
-...then start [Rollup](https://rollupjs.org):
+Clicking once on a heading sorts in ascending order on the value for that column.
+Clicking more than once toggles between ascending and descending order.
+To sort on "user" first and then "title" in the sample above,
+click the "User" header first, then hold down shift and
+click "Title".
 
-```bash
-npm run dev
-```
+## Setting initial sort order
 
-Navigate to [localhost:5000](http://localhost:5000). You should see your app running. Edit a component file in `src`, save it, and reload the page to see your changes.
+## Styling
+
+class
+sortable, ascending, descending
 
 
-## Deploying to the web
-
-### With [now](https://zeit.co/now)
-
-Install `now` if you haven't already:
-
-```bash
-npm install -g now
-```
-
-Then, from within your project folder:
-
-```bash
-now
-```
-
-As an alternative, use the [Now desktop client](https://zeit.co/download) and simply drag the unzipped project folder to the taskbar icon.
-
-### With [surge](https://surge.sh/)
-
-Install `surge` if you haven't already:
-
-```bash
-npm install -g surge
-```
-
-Then, from within your project folder:
-
-```bash
-npm run build
-surge public
-```
