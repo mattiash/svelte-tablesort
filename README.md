@@ -93,3 +93,7 @@ The TableSort component adds the following css classes:
 - `ascending` is set on a th-element if the table is sorted
   on that column in ascending order.
 
+## Example
+
+For a more complete example, see src/App.svelte.
+It can be run by cloning this repository and running `npm install && npm run dev`
