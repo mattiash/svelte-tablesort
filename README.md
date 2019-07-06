@@ -56,6 +56,13 @@ The sorting is done with a numeric comparison if the value in the object is a nu
 If one object contains a number and another contains a string in the same field,
 strange things will happen.
 
+## Slots
+
+The TableSort component uses three different slots, `thead`, `tbody` and `tfoot`.
+thead and tbody are mandatory and tfoot is optional.
+They should all contain a single `tr` element.
+The thead and tfoot slots will be instantiated once and the tbody slot will be instantiated once per entry in the `items` array.
+
 ## Setting initial sort order
 
 It is possible to indicate that a table should be sorted on one or more columns by default by adding a `data-sort-initial` property to the `th` element:
