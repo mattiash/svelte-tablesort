@@ -2,3 +2,4 @@ public/
 src/App.svelte
 src/main.js
 rollup.config.js
+.prettierrc
