@@ -1,5 +1,5 @@
 <script>
-	import SortableTable from './SortableTable.svelte'
+	import TableSort from '../TableSort.svelte'
 
 	let items = []
 
@@ -15,7 +15,7 @@
 {#await dataPromise}
 Loading...
 {:then}
-<SortableTable items={items} class="test1 test2">
+<TableSort items={items} class="test1 test2">
 	<tr slot="thead">
 		<th data-sort="title">Title</th>
 		<th data-sort="user">User</th>
@@ -30,7 +30,7 @@ Loading...
 		<td>{item.time_ago}</td>
 		<td>{item.comments_count}</td>
 	</tr>
-</SortableTable>
+</TableSort>
 {:catch error}
 	<p style="color: red">{error.message}</p>
 {/await}

@@ -1,6 +1,6 @@
 <script>
     import { onMount } from 'svelte'
-    import {sortGenerator, compareStrings, compareNumbers} from './sort.js'
+    import {sortGenerator, compareStrings, compareNumbers} from './src/sort.js'
     export let items
     let className=""
     export {className as class}
