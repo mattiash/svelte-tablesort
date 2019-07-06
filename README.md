@@ -14,7 +14,7 @@ the rows by clicking the headers at the top of each column:
 
 ```
 <script>
-	import TableSort from '../TableSort.svelte'
+	import TableSort from 'svelte-tablesort/TableSort.svelte'
 
 	let items = []
 
