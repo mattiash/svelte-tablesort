@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2019-07-07
+
+### Changes
+
+- Use generator-sort module to avoid code duplication
+- Allow import directly from module
+- Move sirv-cli to devDependencies
+  
 ## [1.0.0] - 2019-07-06
 
 First version.

@@ -12,9 +12,9 @@ npm install svelte-tablesort
 This code shows an html-table where the user can sort
 the rows by clicking the headers at the top of each column:
 
-```
+```html
 <script>
-	import TableSort from 'svelte-tablesort/TableSort.svelte'
+	import {TableSort} from 'svelte-tablesort'
 
 	let items = []
 
