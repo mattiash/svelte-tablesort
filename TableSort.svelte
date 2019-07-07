@@ -6,10 +6,10 @@
 
     import { onMount } from 'svelte'
     import {
-        sortGenerator,
+        sortFunction,
         compareStrings,
         compareNumbers,
-    } from './src/sort.js'
+    } from 'generator-sort'
     export let items
     let className = ''
     export { className as class }
@@ -21,7 +21,7 @@
 
     const sorted = function(arr, sortOrder) {
         arr.sort(
-            sortGenerator(function*(a, b) {
+            sortFunction(function*(a, b) {
                 for (let [fieldName, r] of sortOrder) {
                     const reverse = r === 0 ? 1 : -1
                     if (typeof a[fieldName] === 'number') {
