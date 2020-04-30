@@ -17,6 +17,8 @@
     let thead
     let sortOrder = [[]]
 
+    let descAsc = ''
+
     $: sortedItems = sorted([...items], sortOrder)
 
     const sorted = function(arr, sortOrder) {
@@ -57,19 +59,20 @@
                 sortOrder = [[fieldName, 0]]
             }
         }
-        th.className =
-            CLASSNAME_SORTABLE +
-            ' ' +
-            (sortOrder[sortOrder.length - 1][1]
+
+        descAsc = sortOrder[sortOrder.length - 1][1]
                 ? CLASSNAME_DESC
-                : CLASSNAME_ASC)
+                : CLASSNAME_ASC
+
+        th.classList.add('CLASSNAME_SORTABLE')
+        th.classList.add(descAsc)
     }
 
     function resetClasses() {
         const th = thead.getElementsByTagName('th')
         for (let i = 0; i < th.length; i++) {
             if (th[i].dataset.sort) {
-                th[i].className = CLASSNAME_SORTABLE
+                th[i].classList.add(CLASSNAME_SORTABLE)
             }
         }
     }
@@ -78,15 +81,15 @@
         const th = thead.getElementsByTagName('th')
         for (let i = 0; i < th.length; i++) {
             if (th[i].dataset.sort) {
-                th[i].className = CLASSNAME_SORTABLE
+                th[i].classList.add(CLASSNAME_SORTABLE)
                 th[i].onclick = (event) =>
                     updateSortOrder(th[i], event.shiftKey)
             }
             if (th[i].dataset.sortInitial === 'descending') {
-                th[i].className = CLASSNAME_SORTABLE + ' ' + CLASSNAME_DESC
+                th[i].classList.add(CLASSNAME_SORTABLE, CLASSNAME_DESC)
                 sortOrder = [...sortOrder, [th[i].dataset.sort, 1]]
             } else if (th[i].dataset.sortInitial != undefined) {
-                th[i].className = CLASSNAME_SORTABLE + ' ' + CLASSNAME_ASC
+                th[i].classList.add(CLASSNAME_SORTABLE, CLASSNAME_DESC)
                 sortOrder = [...sortOrder, [th[i].dataset.sort, 0]]
             }
         }
