@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     const CLASSNAME_TABLE = 'tablesort'
     const CLASSNAME_SORTABLE = 'sortable'
     const CLASSNAME_ASC = 'ascending'
@@ -10,18 +10,21 @@
         compareStrings,
         compareNumbers,
     } from 'generator-sort'
-    export let items
+
+    // Waiting for generics support: https://github.com/sveltejs/rfcs/pull/38
+    export let items: Record<string, any>[]
+
     let className = ''
     export { className as class }
 
     let thead
     let sortOrder = [[]]
 
-    $: sortedItems = sorted([...items], sortOrder)
+    $: sortedItems = sorted([...items], sortOrder) as Record<string, any>[]
 
-    const sorted = function(arr, sortOrder) {
+    const sorted = function (arr, sortOrder) {
         arr.sort(
-            sortFunction(function*(a, b) {
+            sortFunction(function* (a, b) {
                 for (let [fieldName, r] of sortOrder) {
                     const reverse = r === 0 ? 1 : -1
                     if (typeof a[fieldName] === 'number') {
@@ -93,16 +96,6 @@
     })
 </script>
 
-<style>
-    thead :global(th.sortable) {
-        cursor: pointer;
-        user-select: none;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        -ms-user-select: none;
-    }
-</style>
-
 <table class="{CLASSNAME_TABLE} {className}">
     <thead bind:this={thead}>
         <slot name="thead" />
@@ -116,3 +109,13 @@
         <slot name="tfoot" />
     </tfoot>
 </table>
+
+<style>
+    thead :global(th.sortable) {
+        cursor: pointer;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+</style>
