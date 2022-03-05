@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.2] - 2022-03-05
+
 - Revert: Enable import from package root
     [vite] Error when evaluating SSR module /node_modules/generator-sort/build/index.js?v=3a585f56:
       ReferenceError: exports is not defined
