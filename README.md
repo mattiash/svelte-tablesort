@@ -95,5 +95,13 @@ The TableSort component adds the following css classes:
 
 ## Example
 
-For a more complete example, see src/App.svelte.
+For a more complete example, see src/routes/index.svelte
 It can be run by cloning this repository and running `npm install && npm run dev`
+
+## Publishing package
+
+```
+npm run package
+cd package
+npm publish
+```

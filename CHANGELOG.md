@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2022-03-05
+
+- Rebuild package with svelte-kit
+- Add types
+
 ## [1.1.0] - 2019-07-07
 
 ### Changes
