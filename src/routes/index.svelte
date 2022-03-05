@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { TableSort } from '../lib/'
+    import TableSort from '../lib/TableSort.svelte'
 
     let items = new Array<Record<string, any>>()
 
